@@ -42,11 +42,13 @@ function single() {
     //check to see if runner is in scoring position
     if (basePath[1] === 1) {
       runs++;
+      console.log('run scored');
       basePath[1] = 0;
     }
   
-    if (basePath[0] === '1') {
+    if (basePath[0] === 1) {
       runs++;
+      console.log('run scored');
       basePath[0] = 0;
     }
     advanceBases(1);
@@ -56,9 +58,16 @@ function single() {
   console.log(`end single`);
 }
 
+// todo: figure out how to advance the batter but account for open bases //
+
 function walk() { 
   console.log(`start walk`);
-  advanceHitter();
+  if (basePath[1] === 0 && basePath[2] === 0) {
+    basePath[2] = 1;
+  } else {
+    advanceHitter();
+  }
+  console.log(basePath);
   console.log(`end walk`);
   walks+=1;
 }
@@ -158,7 +167,6 @@ const resultLookUp = (batter, pitcher, initialResults) => {
 
     if (typeof pitcherResults[0] === "number") {
       secondaryRoll(pitcherResults);
-      checkHits(pitcherResults);
     } else {
       console.log(`red rolled: ${redDie}`);
       console.log(`white dice totaled: ${whiteDice}`);
